@@ -1,0 +1,61 @@
+name: Staging
+
+on:
+  push:
+    branches: [staging]
+  pull_request:
+    branches: [staging]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: staging-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: emberly
+          POSTGRES_PASSWORD: emberly
+          POSTGRES_DB: emberly_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U emberly"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_USERNAME: emberly
+      DB_PASSWORD: emberly
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: '8.4'
+          extensions: bcmath, intl, pdo_pgsql
+          coverage: none
+      - run: composer install --no-interaction --no-progress --prefer-dist
+      - run: cp .env.example .env && php artisan key:generate
+      - run: ./vendor/bin/pint --test
+      - run: ./vendor/bin/pest
+
+  build:
+    if: github.event_name == 'push'
+    needs: test
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    uses: doxa-innovations/.github/.github/workflows/doxa-container-build.yml@main
+    with:
+      source_sha: ${{ github.sha }}
+      environment: staging
+      image: ghcr.io/doxa-innovations/emberly
+      use_infisical: false
