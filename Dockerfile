@@ -23,6 +23,8 @@ WORKDIR /app
 COPY --chown=www-data:www-data . .
 COPY --chown=www-data:www-data --from=vendor /app/vendor ./vendor
 COPY --chown=www-data:www-data --from=assets /app/public/build ./public/build
+# The migration init container runs with a read-only root filesystem, so the package manifest must already exist.
+RUN php artisan package:discover --ansi && chown -R www-data:www-data bootstrap/cache
 USER www-data
 EXPOSE 8000
 ENTRYPOINT ["docker/entrypoint.sh"]
