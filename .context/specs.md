@@ -44,5 +44,5 @@ Emberly is the take-home assessment for PromptEdit (https://pixelforge.promptedi
 
 ## Environments
 
-- Production `https://emberly.doxaplc.com`, staging `https://emberly-staging.doxaplc.com`, on the Doxa K3s platform. Each environment has its own Pixelforge key, webhook secret, database and Infisical environment.
-- The Pixelforge webhook URL is `/webhooks/pixelforge` on each host.
+- Production only: `https://emberly.doxaplc.com` on the Doxa K3s platform. The `staging` branch builds an image but nothing is served from it. The Pixelforge key, webhook secret, database and Infisical `prod` environment are production's.
+- The Pixelforge webhook URL is `https://emberly.doxaplc.com/webhooks/pixelforge`.

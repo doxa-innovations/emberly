@@ -41,10 +41,10 @@ Duplicates are harmless three times over: event ids recorded on the generation, 
 
 ## Configuration and secrets
 
-Runtime ENV comes from Infisical `/runtime` per environment: `APP_KEY`, database credentials (`POSTGRES_*`, `DATABASE_URL`, `DB_URL`), `PIXELFORGE_API_KEY`, `PIXELFORGE_WEBHOOK_SECRET`, `PAYMENTS_WEBHOOK_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPERATOR_EMAIL`, `OPERATOR_PASSWORD`. No build-time values.
+Runtime ENV comes from Infisical `prod` `/runtime`: `APP_KEY`, database credentials (`POSTGRES_*`, `DATABASE_URL`, `DB_URL`), `PIXELFORGE_API_KEY`, `PIXELFORGE_WEBHOOK_SECRET`, `PAYMENTS_WEBHOOK_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPERATOR_EMAIL`, `OPERATOR_PASSWORD`. No build-time values.
 
 ## Deployment
 
 - `Dockerfile`: composer and node stages, then `dunglas/frankenphp` running as `www-data`. The entrypoint runs `php artisan optimize`; the default command starts Octane on port 8000. The worker workload passes `queue:work` as args.
 - GitHub Actions: `staging.yml` runs Pint and Pest against Postgres, then builds `staging-<sha>` with the shared Doxa workflow; `production.yml` rebuilds the merged PR head as `prod-<sha>`. No secrets are used in CI.
-- Platform (doxa-k8s-platform): one Argo Application per environment with `doxa-app` (web, migrations as an init container), `doxa-app` (worker) and `doxa-postgresql`. A 1 Gi volume on the web pod, shared by the worker, holds images.
+- Platform (doxa-k8s-platform): one production Argo Application with `doxa-app` (web, migrations as an init container), `doxa-app` (worker) and `doxa-postgresql`. A 1 Gi volume on the web pod, shared by the worker, holds images.

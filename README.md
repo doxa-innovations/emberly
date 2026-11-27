@@ -58,4 +58,4 @@ Tests run against PostgreSQL (the ledger lives in triggers). Create a database c
 
 ## Deployment
 
-Pushing to `staging` runs the tests and builds `ghcr.io/doxa-innovations/emberly:staging-<sha>`. Merging the `staging` → `main` pull request rebuilds that exact commit as `prod-<sha>`. Argo CD deploys both from the Doxa platform repository. See `.context/architecture.md` for the full picture.
+Pushing to `staging` runs the tests and builds `ghcr.io/doxa-innovations/emberly:staging-<sha>`. Merging the `staging` → `main` pull request rebuilds that exact commit as `prod-<sha>`. Argo CD deploys only the production image, from the Doxa platform repository; there is no staging environment in the cluster. See `.context/architecture.md` for the full picture.
