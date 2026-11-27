@@ -7,6 +7,10 @@ Emberly is the take-home assessment for PromptEdit (https://pixelforge.promptedi
 - **Customers** sign in with Google, buy demo credits and generate images.
 - **Operators** are users with `is_operator`. The seeded operator signs in with email and password (`OPERATOR_EMAIL`, `OPERATOR_PASSWORD`) and can also use the studio.
 
+## Landing page
+
+- `/` is the public landing page for guests: the pitch, the sign-in (Google, plus a hidden operator form), the animated billing receipt, how the money moves, the four statuses, the money guarantees, the test keywords and a short FAQ. Signed-in users are sent to the studio.
+
 ## Generating
 
 - The prompt (at most 4,000 characters), size (1024x1024, 1536x1024, 1024x1536), quality (low, medium, high) and up to 4 reference image URLs.
