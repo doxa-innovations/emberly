@@ -30,7 +30,7 @@ Emberly should feel like a darkroom, not an office: the images and the numbers a
 - The image "develops" (blur and desaturation clear) only when a generation finishes while you watch.
 - Processing tiles breathe with a slow ember glow; queued tiles shimmer.
 - Balances count to their new value. The checkout card flips to show the CVC and sweeps a sheen while paying.
-- No page-load choreography in the app. `prefers-reduced-motion` removes movement and keeps state changes.
+- No page-load choreography in the app. The landing page's only motion is the billing receipt, whose lines arrive in ledger order. `prefers-reduced-motion` removes movement and keeps state changes.
 
 ## Copy
 

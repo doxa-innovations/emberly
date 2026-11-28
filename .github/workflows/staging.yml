@@ -57,5 +57,5 @@ jobs:
     with:
       source_sha: ${{ github.sha }}
       environment: staging
-      image: ghcr.io/doxa-innovations/emberly
+      image: ghcr.io/ephi2github/emberly
       use_infisical: false
